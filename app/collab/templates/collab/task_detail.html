@@ -1,0 +1,40 @@
+{% extends 'collab/objective_detail.html' %}
+
+{% block content %}
+
+<div class="row">
+  <div class="col-sm-2">
+    <div class="card border-dark mb-3 my-3 px-1">
+        <div class="card-header">
+          <h3>{{user.first_name}} Projects</h3>
+        </div>
+      <ul class='list-group list-group-flush'>
+        <a class="list-group-item px-1" href="{% url 'project-detail' object.objective.project.pk %}">Project - {{object.objective.project.name}}</a>
+        <!-- list the other Objectives -->
+        {% for objective in object.objective.project.objective_set.all %}
+          {% if object.objective.pk == objective.pk %}
+            <a class="list-group-item active" href="{% url 'objective-detail' object.objective.project.pk object.objective.pk %}">{{object.objective.name}}</a>
+        <!-- List the task -->
+            {% for task in object.objective.task_set.all %}
+              {% if object.pk == task.pk %}
+                <a class="list-group-item px-5 active" href="{% url 'task-detail' object.objective.pk task.pk %}">{{task.name}}</a>
+              {% else %}
+                <a class="list-group-item px-5" href="{% url 'task-detail' object.objective.pk task.pk %}">{{task.name}}</a>
+              {% endif %}
+            {% endfor %}
+          {% else %}
+            <a class="list-group-item" href="{% url 'objective-detail' objective.project.pk objective.pk %}">{{objective.name}}</a>
+          {% endif %}
+        {% endfor %}
+      </ul>
+      </div>
+  </div>
+  <div class="col-lg-6">
+    <h2>Task - {{object.name}}</h2>
+    <p>{{object.description}}</p>
+  </div>
+  <div class="col-sm-3">
+
+  </div>
+</div>
+{% endblock content %}

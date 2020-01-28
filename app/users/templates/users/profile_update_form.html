@@ -1,0 +1,11 @@
+
+<form class="" action="" method="post" enctype="multipart/form-data">
+  {% csrf_token %}
+  <table>
+    {{user_form.as_table}}
+  </table>
+  <table>
+    {{profile_form.as_table}}
+  </table>
+  <input type="submit" name="update" value="Update">
+</form>

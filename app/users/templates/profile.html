@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+{% block nav %}
+<li class='nav-item'>
+  <a class='nav-link' href="{% url 'logout'%}">Logout</a>
+</li>
+{% endblock nav %}
+
+{% block content %}
+<div class="container">
+  <div class="my-3 p-2 rounded border border-primary">
+    <div class="row">
+      <div class="col-sm-4">
+        <img src="{% if object.profile.photo %}{{object.profile.photo.url}}{% else %}...{% endif %}"
+        class="img-fluid m-4 p-3 border border-secondary" alt="No Photo">
+      </div>
+    </div>
+    <div class="row">
+      <div class="col-sm-4">
+        <h2>{{object.first_name}} {{object.last_name}}</h2>
+        <h4>Description</h4>
+      </div>
+      <div class="col-sm-5">
+      </div>
+      <div class="col-sm-3">
+        <a class="btn btn-secondary btn-sm" href="{% url 'profile-update' object.profile.pk  %}">Update Profile</a>
+      </div>
+    </div>
+  </div>
+  <div class="my-3 py-3 px-2 rounded border border-primary">
+    <h3>Posts You Created</h3>
+    {% for post in object.post_set.all %}
+      <a href="{% url 'post-detail' post.pk %}">{{post.Topic}} Last Updated on - {{post.last_updated}}</a>
+      <br>
+     {% empty %}
+     <p>No post created</p>
+    {% endfor %}
+
+    <h3>Projects</h3>
+    {% for project in object.project_set.all %}
+      {{project.name}}
+      {% empty %}
+      <p>No projects</p>
+      {% endfor %}
+  </div>
+</div>
+{% endblock content %}

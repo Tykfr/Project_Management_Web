@@ -1,0 +1,41 @@
+<!DOCTYPE html>{% load static %}
+<html lang="en" dir="ltr">
+  <head>
+    <meta charset="utf-8">
+    <title>Net</title>
+    <link rel="stylesheet" href="{% static 'collab/style-project.css' %}">
+    <link rel="stylesheet" href="{% static 'collab/style-objective.css' %}">
+
+  </head>
+  <body>
+    <header>
+      <div class="navbar">
+      <div class="container">
+        <span class='navbar-logo'><a style="text-decoration:none;color:black;"href="{% url 'homepage'%}">Net</a></span>
+        <ul class='navbar-list'>
+          {% block navbar %}{% endblock navbar%}
+          {% if user.is_authenticated %}
+          <li class="navbar-item">
+            <a class="navbar-link" href="{% url 'projects' %}">Collab</a>
+          </li>
+          <li class='navbar-item'>
+            <a class="navbar-link" href="#">{{user.first_name}}</a>
+          </li>
+          {% else %}
+          <li class="navbar-item">
+            <a class="navbar-link" href="{% url 'login' %}">Login</a>
+          </li>
+          <li class="navbar-item">
+            <a class="navbar-link" href="{% url 'register' %}">Sign Up</a>
+          </li>
+          {% endif %}
+      </ul>
+      <span class='toggle-icon'>
+        <i class="fa fa-bars"></i>
+      </span>
+      </div>
+    </div>
+    </header>
+    {% block content%}{% endblock content%}
+  </body>
+</html>

@@ -1,0 +1,68 @@
+{% extends 'collab/default.html'%}{% load static %}
+{% block scripts %}
+<link rel="stylesheet" href="{% static 'collab/style.css'%}">
+
+<script src="https://use.fontawesome.com/releases/v5.0.8/js/all.js"></script>
+{% endblock scripts%}
+{% block title %}Projects{% endblock title %}
+{% block content %}
+<div class="container-fluid">
+  <div class="row">
+  <!-- Side navigation -->
+  <div class="col-xl-2">
+    <div class="nav flex-column">
+      <li class="nav-item">
+        <a href="#" class="nav-link active">Dashboard</a>
+      </li>
+      <li class="nav-item">
+        <a href="#" class="nav-link">Projects</a>
+      </li>
+      <li class="nav-item">
+        <a href="#" class="nav-link">Team</a>
+      </li>
+      <li class="nav-item">
+        <a href="#" class="nav-link">Recruit</a>
+      </li>
+    </div>
+  </div>
+
+  <!-- Main Section -->
+  <div class="col-xl-7 mt-4">
+    <!-- Search Bar -->
+    <div class="container-fluid search">
+      <form class="form-inline">
+        <i class="fas fa-search" aria-hidden="true"></i>
+        <input class="form-control form-control-sm w-50 rounded-pill " type="text" placeholder="Search"
+          aria-label="Search">
+      </form>      
+  </div>
+    <!-- Projects Lists -->
+    <div class="container-fluid project mt-3">
+      <h1 class="display-4">Projects</h1>
+        {% for project in object_list  %}
+        <div class="container-fluid row project-tb clickable-row" data-href="{% url 'project-detail' project.id %}">
+        <div class="col-3">
+          {{project.name|title}}
+        </div>
+        <div class="col-3">
+          Objectives - {{project.objective_set.all|length}}
+          <br>
+          Members - {{project.objective_set.members|length}}
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+
+  
+  </div>
+  <!-- Footer -->
+</div>
+</div>
+<script>
+jQuery(document).ready(function($) {
+    $(".clickable-row").click(function() {
+        window.location = $(this).data("href");
+    });
+});
+</script>
+{% endblock content %}

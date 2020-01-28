@@ -1,0 +1,44 @@
+{% extends 'collab/index.html' %}
+{% block navbar%}
+<li class='navbar-item'>
+<a class="navbar-link" href="{% url 'projects' %}">Projects</a>
+</li>
+{% endblock navbar %}
+
+
+{% block content %}
+<div class="container">
+  <div class="side-content">
+    <div class="members-list">
+      <a href="{% url 'add-member' object.project.pk object.pk %}">Add Member</a>
+      {% for member in object.members.all %}
+        {{member.first_name}}
+        {% empty %}
+      <span class='empty-members'>No Members</span>
+      {% endfor %}
+    </div>
+    <div class="objective-list">
+      <span><a href="{% url 'project-detail' object.project.pk %}">{{object.project.name|title}}</a></span>
+      {% for objective in object.project.objective_set.all %}
+      <a href="{% url 'objective-detail' object.project.pk objective.pk %}">{{objective.name|title}}</a>
+      {% endfor %}
+    </div>
+  </div>
+  <div class="main-content">
+    <div class="objective">
+      <h2>{{object.name|title}} - {{object.created_on}}</h2>
+      <h4>{{object.description}}</h4>
+
+      <a href="{% url 'create-task' object.pk %}">New Task</a>
+    </div>
+    {% for task in object.task_set.all %}
+    <div class="task">
+      <h4><a href="{% url 'task-detail' object.pk task.pk %}">{{task.name}}</a></h4>
+      <p>{{task.description}}</p>
+    </div>
+    {% endfor %}
+  </div>
+
+</div>
+
+{% endblock content %}

@@ -1,0 +1,27 @@
+*{
+  box-sizing: border-box;
+}
+body{
+  font-family: "Roboto", sans-serif;
+  
+}
+tr.clickableRow { 
+  cursor: pointer; 
+}
+
+.svg-inline--fa{
+  position: absolute;
+  font-size: 15px;
+  margin-left: 15px;
+}
+.search input{
+  padding-left: 2rem;
+}
+.project-tb{
+  border: 1px solid black;
+  border-radius: 0px 5px 5px 0px;
+  margin-top: 10px;
+}
+.project-tb:hover{
+  background-color: beige;
+}

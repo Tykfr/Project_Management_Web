@@ -1,0 +1,48 @@
+{% extends 'collab/index.html'%}
+{% block navbar %}
+{% if not user.is_authenticated %}
+<li class='navbar-item'>
+  <a class="navbar-link" href="{% url 'projects' %}">Explore</a>
+</li>
+{% endif %}
+{% endblock navbar%}
+{% block content %}
+
+<div class="container">
+  <div class="side-content">
+    <div class="btn-container">
+      <button type="button" name="button">Join Project</button>
+      <button type="button" name="button">Leave Project</button>
+    </div>
+    <div class="members">
+      <p>Leader - {{object.boss.username}}</p>
+      {% for objective in object.objective_set.all %}
+        {% for member in objective.members.all %}
+          {% if member.team_leader %}
+          <p>{{objective.name}} Team Leader - {{member}}</p>
+          {% else %}
+          <p>{{member}}</p>
+          {% endif %}
+        {% endfor%}
+      {% endfor %}
+    </div>
+  </div>
+  <div class="main-content">
+    <div class="project">
+      <h1>{{object.name}}</h1>
+      <p>{{object.description}}</p>
+      <p>Revisions - {{object.projecthistory_set.all|length}}</p>
+      <a href="{% url 'update-project' object.pk %}">Update Project</a>
+      <h2>Objectives</h2>
+      <div class="objectives">
+        <a class='create-btn'href="{% url 'create-objective' object.pk %}">Create Objective</a>
+        {% for objective in object.objective_set.all %}
+
+          <h3><a href="{% url 'objective-detail' object.pk objective.pk %}">{{objective.name}}</a> - {{objective.created_on}} Completed {{objective.completed}}</h3>
+        {% endfor %}
+      </div>
+    </div>
+  </div>
+</div>
+
+{% endblock content %}
